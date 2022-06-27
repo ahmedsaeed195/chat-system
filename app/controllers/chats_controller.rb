@@ -30,9 +30,12 @@ class ChatsController < ApplicationController
   end
 
   def update
-    return render json: { error: 'Chat Already Exists' } if Chat.find_by_chat_no(chat_params[:chat_no])
+    @application = Application.find_by_token(chat_params[:app_token]) if chat_params[:app_token]
+    return render json: { error: 'Chat Already Exists' } if Chat.find_by(chat_no: chat_params[:chat_no],
+                                                                         application_id: @application.id)
 
-    if @chat.update(chat_params)
+    data = { chat_no: chat_params[:number], application_id: @application.id }
+    if @chat.update(data)
       chat = modify_chat(@chat.attributes)
       render json: chat
     else
@@ -52,9 +55,8 @@ class ChatsController < ApplicationController
     render json: { error: 'Application Not Found' }, status: 404 unless @application
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_chat
-    @chat = Chat.find_by(chat_no: params[:chat_no], application_id: @application.id)
+    @chat = Chat.find_by(chat_no: params[:number], application_id: @application.id)
     render json: { error: 'Chat Not Found' } unless @chat
   end
 
@@ -76,6 +78,6 @@ class ChatsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def chat_params
-    params.require(:chat).permit(:application_id, :chat_no)
+    params.slice('app_token', 'number')
   end
 end
