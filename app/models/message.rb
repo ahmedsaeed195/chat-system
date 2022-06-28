@@ -16,19 +16,6 @@ class Message < ApplicationRecord
     end
   end
 
-  # def self.search(query)
-  #   __elasticsearch__.search(
-  #     {
-  #       query: {
-  #         match: {
-  #           query: { match: { content: { query: query, operator: 'and' } } },
-  #           fields: ['content']
-  #         }
-  #       }
-  #     }
-  #   )
-  # end
-
   # Delete the previous articles index in Elasticsearch
   begin
     Message.__elasticsearch__.delete_index!
