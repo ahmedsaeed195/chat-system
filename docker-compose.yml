@@ -18,7 +18,7 @@ services:
       DB_USER: root
       DB_NAME: chat-system
       DB_PASSWORD: password
-      DB_HOST: db
+      DB_HOST: localhost
 
 
   database:
@@ -26,7 +26,6 @@ services:
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: password
       MYSQL_DATABASE: chat-system
-      MYSQL_USER: db
       MYSQL_PASSWORD: password
 
 
