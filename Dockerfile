@@ -39,4 +39,4 @@ RUN bundle check || bundle install
 
 COPY . ./ 
 
-ENTRYPOINT ["/app/entrypoints/docker-entrypoint.sh"]
+ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
