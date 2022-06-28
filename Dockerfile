@@ -1,5 +1,5 @@
 # Dockerfile.rails
-FROM ruby:2.6.10
+FROM ruby:2.6.10-alpine3.15
 
 ENV BUNDLER_VERSION=2.3.16
 
@@ -20,15 +20,13 @@ RUN apk add --update --no-cache \
     libxslt-dev \
     libgcrypt-dev \
     make \
+    mariadb-dev \
     netcat-openbsd \
     nodejs \
     openssl \
     pkgconfig \
-    postgresql-dev \
-    python \
     tzdata \
     yarn 
-
 RUN gem install bundler -v 2.3.16
 
 WORKDIR /app
