@@ -42,7 +42,7 @@ class MessagesController < ApplicationController
   end
 
   def update
-    if @message.update(message_params)
+    if @message.update(message_params[:content])
       message = modify_message(@message.attributes)
       render json: message
     else
