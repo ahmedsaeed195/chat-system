@@ -37,6 +37,4 @@ RUN bundle config build.nokogiri --use-system-libraries
 
 RUN bundle check || bundle install
 
-COPY . ./ 
-
-ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
+COPY . ./

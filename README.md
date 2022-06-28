@@ -30,6 +30,18 @@ This app got some system dependencies in order to run properly:
 
 ## Getting started
 
+### 1. Docker
+
+Just run:
+
+```
+docker-compose up
+```
+
+and the server should be up and running on port `3000`
+
+### 2. No Docker
+
 After cloning the application, simply run:
 
 ```
