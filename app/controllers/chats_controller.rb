@@ -19,7 +19,7 @@ class ChatsController < ApplicationController
   end
 
   def create
-    data = { chat_no: @chat_no, application_id: @application.id }
+    data = { chat_no: @no, application_id: @application.id }
     @chat = Chat.new(data)
     if @chat.save
       chat = modify_chat(@chat.attributes)
@@ -31,7 +31,7 @@ class ChatsController < ApplicationController
 
   def update
     @application = Application.find_by_token(chat_params[:app_token]) if chat_params[:app_token]
-    return render json: { error: 'Chat Already Exists' } if Chat.find_by(chat_no: chat_params[:chat_no],
+    return render json: { error: 'Chat Already Exists' } if Chat.find_by(chat_no: chat_params[:no],
                                                                          application_id: @application.id)
 
     data = { chat_no: chat_params[:number], application_id: @application.id }
@@ -56,24 +56,24 @@ class ChatsController < ApplicationController
   end
 
   def set_chat
-    @chat = Chat.find_by(chat_no: params[:number], application_id: @application.id)
+    @chat = Chat.find_by(chat_no: params[:no], application_id: @application.id)
     render json: { error: 'Chat Not Found' } unless @chat
   end
 
   def modify_chat(chat)
     chat = chat.except('id', 'application_id')
-    remainder = chat.slice!('chat_no')
+    remainder = chat.slice!('no')
     chat[:application_token] = @application.token
     chat.merge(remainder)
   end
 
   def set_chat_no
     chats = Chat.where(application_id: @application.id)
-    @chat_no = if chats.length.zero?
-                 1
-               else
-                 chats.last[:chat_no] + 1
-               end
+    @no = if chats.length.zero?
+            1
+          else
+            chats.last[:chat_no] + 1
+          end
   end
 
   # Only allow a list of trusted parameters through.
