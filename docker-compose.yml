@@ -23,6 +23,8 @@ services:
 
   database:
     image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: password
       MYSQL_DATABASE: chat-system
@@ -30,6 +32,7 @@ services:
 
 
 volumes:
+  mysql:
   gem_cache:
   db_data:
   node_modules:    
